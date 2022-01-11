@@ -6,7 +6,9 @@ Version: 1.01
 Description: Photo Exif was created as a means to view exif data from a photo 
 along with the ability to remove exif data from any of your own photos. 
 
-Note: This program only supports a .jpg file format.
+Note: 
+   This program only supports a .jpg file format.
+   This program was created in Python 3.
 
 How to use:
 
