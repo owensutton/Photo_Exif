@@ -4,6 +4,7 @@
 # Description: This program was developed to view the Exif data of photos
 #              along with having the option to remove exif data from a photo.
 #              Output information is written to Photo_Exif_Results.txt
+#              Developed in Python3.
 #
 #
 # Change Log
@@ -11,6 +12,7 @@
 # Version #   Developer     Date of Change   Description of Change
 # ---------   -----------   --------------   ----------------------
 # 1.0         Owen Sutton   01/09/2022       New Program
+# 1.01        Owen Sutton   01/11/2022       Added the option to write output to the command line instead of file.
 #
 #
 
@@ -29,8 +31,7 @@ ________  __    __    ____    _______    ____     ______  __   __   ___   _____
 | |__| | |  |__|  | |  __  |   |   |   |  __  |   | |__    \ V /    | |  | |_
 |   ___| |   __|  | | |  | |   |   |   | |  | |   |  __|   /   \    | |  |  _|
 |  |     |  |  |  | | |__| |   |   |   | |__| |   | |___  / /^\ \   _ _  | |
-|__|     |__|  |__|  \____/    |___|    \____/     \____ / /   \ \ |___| |_|
-
+|__|     |__|  |__|  \____/    |___|    \____/    \_____ / /   \ \ |___| |_|
 
 Created By: Owen Sutton
 Email: Owensutton7@gmail.com
@@ -45,7 +46,24 @@ while True:
     try:
         convert_toInt = int(option)
         if convert_toInt == 1:
-            print("View exif data has been selected. Check output file for final results")
+            print("View exif data has been selected.")
+
+            while True:
+                print("")
+                option2 = input("Would you like the output in the command line or a file?:\n\n1 - Output to command line\n2 - Output to file\nEnter choice here: ")
+                try:
+                    option_toInt = int(option2)
+                    if option_toInt == 1:
+                        print("")
+                        break
+                    elif option_toInt == 2:
+                        print("Check output file for final results.")
+                        break
+                    else:
+                        print("You have entered an invalid input, please try again.")
+                except:
+                    print("You have entered an invalid input, please try again.")
+
             break
         elif convert_toInt == 2:
             print("remove exif data has been selected. Check output file for final results")
@@ -56,15 +74,17 @@ while True:
     except:
         print("You have entered an invalid input, please try again.")
 
-# Check if the output file exists.
-Output_file_exists = os.path.exists("Photo_Exif_Results.txt")
 
-if Output_file_exists == True:
-    # Delete output file if it already exists.
-    os.remove("Photo_Exif_Results.txt")
+if option_toInt == 2:
+    # Check if the output file exists.
+    Output_file_exists = os.path.exists("Photo_Exif_Results.txt")
 
-# Create/ move print messages to output file.
-sys.stdout = open("Photo_Exif_Results.txt", "w")
+    if Output_file_exists == True:
+        # Delete output file if it already exists.
+        os.remove("Photo_Exif_Results.txt")
+
+    # Create/ move print messages to output file.
+    sys.stdout = open("Photo_Exif_Results.txt", "w")
 
 # Check if the Photos folder exists
 Photo_folder_exists = os.path.exists("Photos")
@@ -119,5 +139,7 @@ for file in files:
         print(f"{file}, file format is not supported!")
 
 # Close output file
-sys.stdout.close()
+if option_toInt == 2:
+    sys.stdout.close()
+
 os.chdir(cwd)
