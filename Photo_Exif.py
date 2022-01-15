@@ -6,6 +6,7 @@
 #              Output information is written to Photo_Exif_Results.txt
 #              Developed in Python3.
 #
+# Upcoming enhancements: The ability to edit the exif data and place your own messages inside.
 #
 # Change Log
 #
