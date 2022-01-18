@@ -14,7 +14,7 @@
 # ---------   -----------   --------------   ----------------------
 # 1.0         Owen Sutton   01/09/2022       New Program
 # 1.01        Owen Sutton   01/11/2022       Added the option to write output to the command line instead of file.
-#
+# 1.02        Owen Sutton   01/18/2022       Restructured Program
 #
 
 
@@ -39,11 +39,31 @@ Email: Owensutton7@gmail.com
 
 """)
 
+#Checks if the output file exists and delete's it, if it does.
+def Check_Output_File():
+        # Check if the output file exists.
+        Output_file_exists = os.path.exists("Photo_Exif_Results.txt")
+
+        if Output_file_exists == True:
+            # Delete output file if it already exists.
+            os.remove("Photo_Exif_Results.txt")
+
+        # Create/ move print messages to output file.
+        sys.stdout = open("Photo_Exif_Results.txt", "w")
+
+# Check if the Photos folder exists
+def Check_Photo_Folder_Exists():
+    Photo_folder_exists = os.path.exists("Photos")
+
+    if Photo_folder_exists == False:
+        print("Photos Folder does not Exist. Please create a Photos folder and place your pictures inside.")
+        exit()
+
 
 # Choose to view exif data or to remove exif data from photo.
 # Warning, once a remove exif data from a photo, you cannot recover it.
 while True:
-    option = input("Do you want to view or remove exif data?:\n\n1 - View exif data\n2 - Remove exif data\nEnter choice here: ")
+    option = input("Do you want to view, remove, or edit exif data?:\n\n1 - View exif data\n2 - Remove exif data\n3 - Edit exif data\nEnter choice here: ")
     try:
         convert_toInt = int(option)
         if convert_toInt == 1:
@@ -69,6 +89,11 @@ while True:
         elif convert_toInt == 2:
             print("remove exif data has been selected. Check output file for final results")
             break
+
+        elif convert_toInt == 3:
+            print("Edit exif data has been selected.")
+
+            break
         else:
             print("You entered an invalid input, please try again.")
 
@@ -76,24 +101,12 @@ while True:
         print("You have entered an invalid input, please try again.")
 
 
+#Check if the output file exits, delete if it does.
 if option_toInt == 2:
-    # Check if the output file exists.
-    Output_file_exists = os.path.exists("Photo_Exif_Results.txt")
+    Check_Output_File()
 
-    if Output_file_exists == True:
-        # Delete output file if it already exists.
-        os.remove("Photo_Exif_Results.txt")
-
-    # Create/ move print messages to output file.
-    sys.stdout = open("Photo_Exif_Results.txt", "w")
-
-# Check if the Photos folder exists
-Photo_folder_exists = os.path.exists("Photos")
-
-if Photo_folder_exists == False:
-    print("Photos Folder does not Exist. Please create a Photos folder and place your pictures inside.")
-    exit()
-
+#Check if any Photo's folder exists.
+Check_Photo_Folder_Exists()
 
 # Move current working directory to the Photos folder that contains your photos.
 cwd = os.getcwd()
